@@ -26,7 +26,7 @@ describe('getPeoplePromise', () => {
   it('calls swapi to get people with a promise', (done) => {
     expect.assertions(2);
 
-    swapi.getPeoplePromise(axios)
+    swapi.getPeoplePromise(mockAxios)
       .then((res) => {
         expect(res.count).toBe(87);
         expect(res.results.length).toBeGreaterThan(5);
@@ -44,7 +44,7 @@ describe('getPeoplePromise', () => {
 
     return swapi.getPeoplePromise(mockAxios)
       .then((res) => {
-        expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        expect(mockAxios.get).toHaveBeenCalledTimes(2);
         expect(mockAxios.get).toHaveBeenCalledWith('https://swapi.co/api/people');
         expect(res.count).toBe(87);
         expect(res.results.length).toBeGreaterThan(10);
