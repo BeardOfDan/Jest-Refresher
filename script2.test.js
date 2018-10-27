@@ -1,7 +1,7 @@
 const axios = require('axios');
 const swapi = require('./script2');
 
-describe('The swapi api', () => {
+describe('getPeople', () => {
   it('calls swapi to get people', async (done) => {
     expect.assertions(1);
 
@@ -14,6 +14,13 @@ describe('The swapi api', () => {
     } finally {
       done();
     }
+  });
+});
+
+describe('getPeoplePromise', () => {
+  const mockAxios = {};
+  mockAxios.get = jest.fn().mockImplementation(() => {
+    return Promise.resolve({ data: { count: 87, results: new Array(87) } });
   });
 
   it('calls swapi to get people with a promise', (done) => {
@@ -31,23 +38,16 @@ describe('The swapi api', () => {
         done();
       });
   });
-});
 
-describe('getPeoplePromise', () => {
   it('returns count and results', () => {
     expect.assertions(4);
-
-    const mockAxios = {};
-    mockAxios.get = jest.fn().mockImplementation(() => {
-      return Promise.resolve({ data: { count: 87, results: new Array(87) } });
-    });
 
     return swapi.getPeoplePromise(mockAxios)
       .then((res) => {
         expect(mockAxios.get).toHaveBeenCalledTimes(1);
         expect(mockAxios.get).toHaveBeenCalledWith('https://swapi.co/api/people');
         expect(res.count).toBe(87);
-        expect(res.results.length).toBeGreaterThan(5);
+        expect(res.results.length).toBeGreaterThan(10);
       });
   });
 });

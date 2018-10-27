@@ -6,6 +6,7 @@ dbMock = [
   'disney.com',
   'dogpictures.com'
 ];
+
 describe('googleSearch', () => {
   it('is searching google', () => {
     expect(googleSearch('testtest', dbMock)).toEqual([]);
