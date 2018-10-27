@@ -32,3 +32,19 @@ describe('The swapi api', () => {
       });
   });
 });
+
+describe('getPeoplePromise', () => {
+  it('returns count and results', () => {
+    expect.assertions(1);
+
+    const mockAxios = {};
+    mockAxios.get = jest.fn().mockImplementation(() =>
+      Promise.resolve({ data: { count: 87, results: new Array(87) } })
+    );
+
+    return swapi.getPeoplePromise(mockAxios)
+      .then(() => {
+        expect(mockAxios.get).toHaveBeenCalledTimes(1);
+      });
+  });
+});
